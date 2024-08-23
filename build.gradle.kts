@@ -25,6 +25,10 @@ dependencies {
 	implementation("org.springframework.kafka:spring-kafka:3.2.3")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
 	implementation("io.github.microutils:kotlin-logging:1.12.5")
+	implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")

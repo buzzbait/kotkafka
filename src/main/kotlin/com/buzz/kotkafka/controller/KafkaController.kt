@@ -17,8 +17,8 @@ class KafkaController (
     @PostMapping("")
     fun sendMessage() : ResponseEntity<String> {
 
-        val sendMessage =  SendMessage("kafkaProducerService","This is Send Message")
         for (i in 1..50) {
+            val sendMessage =  SendMessage(i,"kafkaProducerService","This is Send Message")
             kafkaProducerService.sendMessage(KafkaConstants.TEST_TOPIC_NAME,sendMessage)
         }
 

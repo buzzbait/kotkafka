@@ -1,5 +1,8 @@
 package com.buzz.kotkafka.config
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.common.serialization.StringDeserializer
@@ -9,6 +12,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.kafka.annotation.EnableKafka
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory
+import org.springframework.kafka.listener.ContainerProperties
 
 
 @EnableKafka
@@ -32,7 +36,9 @@ class KafkaConsumerConfig {
 
         factory.setConcurrency(2) // Consumer Process Thread Count
         factory.consumerFactory = DefaultKafkaConsumerFactory(getConfig())
-        factory.containerProperties.pollTimeout = 500
+        //factory.containerProperties.pollTimeout = 500
+        // 리스너에서 acknowledgment가 호출될 때 마다, 커밋
+        factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL_IMMEDIATE
 
         return factory
     }
@@ -57,4 +63,9 @@ class KafkaConsumerConfig {
             ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java,
             ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java
         )
+
+    @Bean
+    fun coroutineScope(): CoroutineScope {
+        return CoroutineScope(Dispatchers.Default + SupervisorJob())
+    }
 }
