@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component
 class BuzzTopicListener(
     private val coroutineScope: CoroutineScope
 ) {
-
     private val logger = KotlinLogging.logger {}
 
     init {
@@ -21,16 +20,16 @@ class BuzzTopicListener(
     }
 
     @KafkaListener(
-        id = "consumePartion1",
+        id = "consumePartition1",
         topicPartitions = [
             TopicPartition(topic = KafkaConstants.TEST_TOPIC_NAME, partitions = ["0"])
         ] ,
         groupId = KafkaConstants.TEST_GROUP1_NAME
     )
-    fun consumePartion1(@Payload data: String,ack: Acknowledgment) {
+    fun consumePartition1(@Payload data: String,ack: Acknowledgment) {
         coroutineScope.launch {
             try {
-                logger.info("Partion[0] Message")
+                logger.info("Partition[0] Message")
                 processMessage(data)
                 ack.acknowledge()
             } catch (e: Exception) {
@@ -42,17 +41,17 @@ class BuzzTopicListener(
     }
 
     @KafkaListener(
-        id = "consumePartion2",
+        id = "consumePartition2",
         topicPartitions = [
             TopicPartition(topic = KafkaConstants.TEST_TOPIC_NAME, partitions = ["1"])
         ],
         groupId = KafkaConstants.TEST_GROUP1_NAME
     )
-    fun consumePartion2(@Payload data: String,ack: Acknowledgment) {
+    fun consumePartition2(@Payload data: String,ack: Acknowledgment) {
 
         coroutineScope.launch {
             try {
-                logger.info("Partion[1] Message")
+                logger.info("Partition[1] Message")
                 processMessage(data)
                 ack.acknowledge()
             } catch (e: Exception) {
@@ -63,16 +62,16 @@ class BuzzTopicListener(
     }
 
     @KafkaListener(
-        id = "consumePartion3",
+        id = "consumePartition3",
         topicPartitions = [
             TopicPartition(topic = KafkaConstants.TEST_TOPIC_NAME, partitions = ["2"])
         ],
         groupId = KafkaConstants.TEST_GROUP1_NAME
     )
-    fun consumePartion3(@Payload data: String,ack: Acknowledgment) {
+    fun consumePartition3(@Payload data: String,ack: Acknowledgment) {
         coroutineScope.launch {
             try {
-                logger.info("Partion[2] Message")
+                logger.info("Partition[2] Message")
                 processMessage(data)
                 ack.acknowledge()
             } catch (e: Exception) {
@@ -85,9 +84,9 @@ class BuzzTopicListener(
     private suspend fun processMessage(message: String) {
         withContext(Dispatchers.Default) {
             // 메시지 처리 로직
-            logger.info("Processing message: $message")
+            logger.info("Processing Start...: $message")
             delay(1000) // 시뮬레이션된 처리 시간
-            logger.info("Processed message: $message")
+            logger.info("Processed End...: $message")
         }
     }
 }
