@@ -30,15 +30,19 @@ class KafkaConsumerConfig {
         logger.info("KafkaConsumerConfig Created...")
     }
 
+    /*
+            ackMode = MANUAL_IMMEDIATE : 수동처리로 acknowledgment() 호출시 바로 커밋진행
+            isAsyncAcks = true : 비동기 커밋 활성화(해당 설정 없이 코루틴으로 컨슈머 처리시 누락되는 커밋발생)
+     */
     @Bean
     fun kafkaListenerContainerFactory(): ConcurrentKafkaListenerContainerFactory<String, String> {
         val factory = ConcurrentKafkaListenerContainerFactory<String, String>()
 
         factory.setConcurrency(2) // Consumer Process Thread Count
         factory.consumerFactory = DefaultKafkaConsumerFactory(getConfig())
-        //factory.containerProperties.pollTimeout = 500
-        // 리스너에서 acknowledgment가 호출될 때 마다, 커밋
+        factory.containerProperties.pollTimeout = 500
         factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL_IMMEDIATE
+        factory.containerProperties.isAsyncAcks = true
 
         return factory
     }
