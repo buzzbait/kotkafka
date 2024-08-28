@@ -69,8 +69,4 @@ class KafkaConsumerConfig {
             ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG to StringDeserializer::class.java
         )
 
-    @Bean
-    fun coroutineScope(): CoroutineScope {
-        return CoroutineScope(Dispatchers.Default + SupervisorJob())
-    }
 }

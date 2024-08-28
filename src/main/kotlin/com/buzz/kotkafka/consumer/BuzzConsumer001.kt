@@ -6,14 +6,13 @@ import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.kafka.annotation.TopicPartition
 import org.springframework.kafka.support.Acknowledgment
 import org.springframework.messaging.handler.annotation.Payload
-import org.springframework.stereotype.Component
 
 /*
     Kafka 의 Consumer 는 Thread Not Safe 함
     offset commits 은  poll()ing the consumer 과 동일한 쓰레드에서 발생해야 한다.
  */
 //@Component
-class BuzzSyncConsumer {
+class BuzzConsumer001 {
     private val logger = KotlinLogging.logger {}
 
     init {

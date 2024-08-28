@@ -7,4 +7,4 @@ spring:
       bootstrap-servers: localhost:9092
       #bootstrap-servers: 13.125.66.120:9095,13.125.66.120:9096,13.125.66.120:9097
 
-    type: default
+    type: RECORD
