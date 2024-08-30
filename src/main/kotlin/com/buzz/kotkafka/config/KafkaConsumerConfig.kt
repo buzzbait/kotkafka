@@ -42,7 +42,9 @@ class KafkaConsumerConfig {
         factory.consumerFactory = DefaultKafkaConsumerFactory(getConfig())
         factory.containerProperties.pollTimeout = 500
         factory.containerProperties.ackMode = ContainerProperties.AckMode.MANUAL_IMMEDIATE
-        factory.containerProperties.isAsyncAcks = true
+        //factory.isBatchListener = false
+
+        //factory.containerProperties.isAsyncAcks = true
 
         return factory
     }
